@@ -27,8 +27,10 @@ Make sure your MacBook has the following installed.
         nvm install 9.5.0
         nvm default node
 
-* [Docker for Mac]
-* [truffle]
+* [Docker for Mac](https://docs.docker.com/docker-for-mac/)
+* [truffle](http://truffleframework.com/)
+
+        npm install -g truffle
 
 ### Other things it is good to have installed
 

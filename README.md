@@ -14,7 +14,6 @@ Preparation and examples for the Blockchain Bootcamp
 
 * [NodeJS](htps://nodejs.org), version 9.5+ (I use [`nvm`](https://github.com/creationix/nvm) to manage Node versions — `brew install nvm`.)
 * [truffle](http://truffleframework.com/), which is a comprehensive framework for Ethereum development. `npm install -g truffle` — this should install Truffle v4.0.6 or better.  Check that with `truffle version`.
-* [Access to the C4Coin Jira](https://c4coin.atlassian.net)
 
 ### Initialisation
 
@@ -26,7 +25,7 @@ Preparation and examples for the Blockchain Bootcamp
 
     npm test
 
-or with code coverage
+or with code coverage (when there is code to test)
 
     npm run test:cov
 
