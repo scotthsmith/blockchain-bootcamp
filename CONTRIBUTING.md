@@ -86,3 +86,9 @@ Pull requests must be named as follows `[issue type, issue number] high level de
 If your change does not fit any of these categories, use `Feature`. Likewise if your change is not tied to an issue number you may use `n/a` instead.
 
 So to use the above example your Pull Request would be named `[Feature, ABC-1] added anteater to aardvark`
+
+### You built it, you merge it
+
+A developer must be responsible for their own work, from accepting a task through to merging to production.  With that in mind if you review another developer's PR, please don't then merge it yourself.  As a general rule you must let the developer merge her own PRs.
+
+Likewise, don't expect someone else to merge your PR.  Unless you do not have write permission on a project, you will always aim to take personal responsibility for the quality of the code that gets merged in.

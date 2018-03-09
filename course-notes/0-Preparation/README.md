@@ -22,9 +22,9 @@ Make sure your MacBook has the following installed.
 
         brew install nvm
 
-* [Node version 9.5.0](https://nodejs.org)
+* [Node version 9.8.0](https://nodejs.org)
 
-        nvm install 9.5.0
+        nvm install 9.8.0
         nvm default node
 
 * [Docker for Mac](https://docs.docker.com/docker-for-mac/)
