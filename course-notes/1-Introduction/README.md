@@ -32,7 +32,7 @@ Review the following files.
 
 ### A very simple smart contract
 
-Using [Remix](https://remix.ethereum.org).
+We'll write a very simple contract using [Remix](https://remix.ethereum.org).
 
 ### Addresses and accounts
 
