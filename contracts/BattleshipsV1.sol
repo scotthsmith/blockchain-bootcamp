@@ -8,14 +8,13 @@ contract BattleshipsV1 is Battleships {
     mapping(address => address) private opponents;
     mapping(address => uint8[][]) private boards;
 
-    enum shipTypes { Tug, Frigate, Destroyer, Battleship, Carrier }
+    enum ShipTypes { Tug, Frigate, Destroyer, Battleship, Carrier }
 
     uint8[8][8] private defaultBoard;
 
     function BattleshipsV1()
         public
     {
-
     }
 
     function playTurn(uint8 x, uint8 y)
