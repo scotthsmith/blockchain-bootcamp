@@ -31,7 +31,7 @@ contract BattleshipsV1 is Battleships {
         defaultShips[uint8(ShipTypes.Battleship)] = ShipInfo(1, 4, 2);
         defaultShips[uint8(ShipTypes.Carrier)] = ShipInfo(2, 5, 1);
     }
-    
+
     /**
      * At the start of the game each player must place their ships, one at a time.
      *
@@ -46,6 +46,8 @@ contract BattleshipsV1 is Battleships {
      *
      * The ships get placfunction placeShip(uint8 x, uint8 y, uint8 ship, uint8 direction)
      * ternal;ed one at a time until there are no more ships.
+     * The ships get placfunction placeShip(uint8 x, uint8 y, uint8 ship, uint8 direction)
+     * externalised one at a time until there are no more ships.
      * The function MUST throw if the placed ship overlaps with another.
      *
      * @param x The horizontal grid location of the top-left corner of the ship.
@@ -57,8 +59,9 @@ contract BattleshipsV1 is Battleships {
         external
     {
         address player = msg.sender;
+
         uint8[][] memory board = boards[player];
-        //
+
         ShipInfo memory thisShip = defaultShips[ship];
 
 
