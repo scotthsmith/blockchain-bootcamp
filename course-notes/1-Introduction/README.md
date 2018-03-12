@@ -34,18 +34,46 @@ Review the following files.
 
 We'll write a very simple contract using [Remix](https://remix.ethereum.org).
 
+#### Outcomes
+
+See examples in [contracts](contracts/).
+
 ### Addresses and accounts
 
 - set up an address using MetaMask
+
+  - https://faucet.metamask.io/
+
 - public and private keys
+
+  - everyone saved their passphrases and etc
 
 ### EVM 101
 
+ref: https://github.com/ethereum/wiki/wiki/White-Paper
+
 - what's a block?
+
+  - see https://github.com/ethereum/wiki/wiki/Glossary#user-content-ethereum-blockchain
+
 - stack-and-memory model
+
+  - see https://github.com/ethereum/wiki/wiki/Subtleties
+
 - 32 bytes words
 - deterministic language
 - no i/o
 - no external access
 
     - oracles
+
+      External functions that write data to a smart contract, thus making that data available to other smart contracts.
+
+### Diagrams
+
+![Proof of Work][pow]
+
+![The State Tree][tss]
+
+[pow]: images/proof-of-work.jpg
+[tss]: images/the-state-tree.png
