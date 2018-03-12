@@ -13,7 +13,6 @@ contract BattleshipsV1 is Battleships {
 
     enum ShipTypes { Tug, Frigate, Destroyer, Battleship, Carrier }
 
-
     function BattleshipsV1()
         public
     {
