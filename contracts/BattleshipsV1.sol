@@ -259,7 +259,7 @@ contract BattleshipsV1 is Battleships {
         internal
     {
         uint8[] memory line = new uint8[](8);
-        for (uint8 x = 0; x < 0; x++) {
+        for (uint8 x = 0; x < 8; x++) {
             boards[player].push(line);
         }
     }

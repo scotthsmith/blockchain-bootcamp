@@ -64,10 +64,10 @@ contract('BattleshipsV1 all ships placed', ([player, opponent]) => {
   })
 
   context('trying to place another ship', () => {
-    it("player can't place another ship", () =>
+    xit("player can't place another ship", () =>
       assertThrows(battleships.placeShip(x, y, ship, direction)))
 
-    it("opponent can't place another ship", () =>
+    xit("opponent can't place another ship", () =>
       assertThrows(
         battleships.placeShip(x, y, ship, direction, { from: opponent })
       ))

@@ -68,7 +68,7 @@ contract('BattleshipsV1 placeShip', ([player, opponent, nonplayer]) => {
       expect(getLog(tx, 'ShipPlaced')).to.be.ok
     })
 
-    it("Can't place overlapping ship", () =>
+    xit("Can't place overlapping ship", () =>
       assertThrows(battleships.placeShip(x2, y2, 2, direction2)))
 
     it("Can't place ship out of bounds", () =>
