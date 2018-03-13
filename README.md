@@ -2,8 +2,8 @@
 
 Preparation and examples for the Blockchain Bootcamp
 
-* `develop` [![CircleCI](https://circleci.com/gh/industrieco/blockchain-bootcamp/tree/develop.svg?style=svg)](https://circleci.com/gh/industrieco/blockchain-bootcamp/tree/develop) [codecov badge]
-* `master` [![CircleCI](https://circleci.com/gh/industrieco/blockchain-bootcamp/tree/master.svg?style=svg)](https://circleci.com/gh/industrieco/blockchain-bootcamp/tree/master) [codecov badge]
+* `develop` [![CircleCI](https://circleci.com/gh/industrieco/blockchain-bootcamp/tree/develop.svg?style=svg)](https://circleci.com/gh/industrieco/blockchain-bootcamp/tree/develop) [![codecov](https://codecov.io/gh/industrieco/blockchain-bootcamp/branch/develop/graph/badge.svg)](https://codecov.io/gh/industrieco/blockchain-bootcamp)
+* `master` [![CircleCI](https://circleci.com/gh/industrieco/blockchain-bootcamp/tree/master.svg?style=svg)](https://circleci.com/gh/industrieco/blockchain-bootcamp/tree/master) [![codecov](https://codecov.io/gh/industrieco/blockchain-bootcamp/branch/master/graph/badge.svg)](https://codecov.io/gh/industrieco/blockchain-bootcamp)
 
 ## Development
 

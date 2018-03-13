@@ -1,5 +1,7 @@
-context('dummy', () => {
-  it('tests that true is true', () => {
-    assert.isTrue(true)
+const { expect } = require("chai")
+
+context("dummy", () => {
+  it("true is true", () => {
+    expect(true).to.be.true
   })
 })
