@@ -12,7 +12,8 @@ interface Battleships {
         address indexed by,
         uint8 x,
         uint8 y,
-        uint shipId
+        uint shipId,
+        uint8 direction
     );
 
     event ShipSunk(
