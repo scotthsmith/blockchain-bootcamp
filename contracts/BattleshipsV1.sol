@@ -11,7 +11,7 @@ contract BattleshipsV1 is Battleships {
 
     enum ShipTypes { Tug, Frigate, Destroyer, Battleship, Carrier }
     uint8[8][8] private defaultBoard;
-    
+
     struct ShipInfo {
         uint8 width;
         uint8 depth;
@@ -63,16 +63,25 @@ contract BattleshipsV1 is Battleships {
 
         ShipInfo memory thisShip = defaultShips[ship];
 
+        if (direction == 0) {
+            for (uint8 idxX = x; idxX < x+thisShip.width; idxX++) {
+                board[idxX][y] = ship;
+            }
 
-        for (uint8 idxX = x; idxX < x+thisShip.width; idxX++) {
-            board[idxX][y] = ship;
+            for (uint8 idxY = y; idxY < y+thisShip.depth; idxY++) {
+                board[x][idxY] = ship;
+            }
+        } else {
+            for (idxX = x; idxX < x+thisShip.depth; idxX++) {
+                board[idxX][y] = ship;
+            }
+
+            for (idxY = y; idxY < y+thisShip.width; idxY++) {
+                board[x][idxY] = ship;
+            }
         }
 
-        for (uint8 idxY = y; idxY < y+thisShip.depth; idxY++) {
-            board[x][idxY] = ship;
-        }
-
-        ShipPlaced(player, x, y, ship);
+        ShipPlaced(player, x, y, ship, direction);
 
     }
 
