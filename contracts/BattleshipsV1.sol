@@ -6,7 +6,7 @@ import './Battleships.sol';
 contract BattleshipsV1 is Battleships {
 
     mapping(address => address) private opponents;
-    mapping(address => uint8[8][8]) private boards;
+    mapping(address => uint8[][]) private boards;
     mapping(address => bool) private currentPlayer;
 
     enum ShipTypes { Empty, Tug, Frigate, Destroyer, Battleship, Carrier }
@@ -259,6 +259,7 @@ contract BattleshipsV1 is Battleships {
     function clearBoard(address player)
         internal
     {
+        boards[player].length = 0;
         uint8[] memory line = new uint8[](8);
         for (uint8 x = 0; x < 8; x++) {
             boards[player].push(line);
