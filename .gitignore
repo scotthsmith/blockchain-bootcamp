@@ -42,4 +42,7 @@ jspm_packages/
 build
 
 .DS_Store
-.idea
+
+# IntelliJ  config files
+.idea/
+*.iml
