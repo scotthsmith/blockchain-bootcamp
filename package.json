@@ -1,8 +1,7 @@
 {
   "name": "battleships",
   "version": "1.0.0",
-  "description":
-    "Ethereum smart contracts that implement the game of Battleships",
+  "description": "Ethereum smart contracts that implement the game of Battleships",
   "main": "truffle.js",
   "directories": {
     "test": "test",
@@ -32,23 +31,29 @@
   "scripts": {
     "precommit": "lint-staged",
     "prettier": "prettier --single-quote --no-semi --write '**/*.{js,json}'",
-    "eslint-check":
-      "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+    "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "test": "truffle test",
     "test:cov": "solidity-coverage",
     "lint:sol": "solhint contracts/**/*.sol",
     "lint:js": "eslint test/**/*.js"
   },
   "lint-staged": {
-    "**/*.{js,json}": ["prettier --single-quote --no-semi --write", "git add"]
+    "**/*.{js,json}": [
+      "prettier --single-quote --no-semi --write",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
     "url": "git+git@github.com:industrieco/blockchain-bootstrap.git.git"
   },
-  "keywords": ["identity"],
+  "keywords": [
+    "identity"
+  ],
   "author": "Dave Sag <david.sag@industrie.co>",
-  "contributors": ["Jack Reichelt <jack.reichelt@industrie.co>"],
+  "contributors": [
+    "Jack Reichelt <jack.reichelt@industrie.co>"
+  ],
   "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/industrieco/blockchain-bootstrap/issues"
