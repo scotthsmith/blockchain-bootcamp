@@ -6,10 +6,10 @@ import './Battleships.sol';
 contract BattleshipsV1 is Battleships {
 
     mapping(address => address) private opponents;
-    mapping(address => uint8[][]) private boards;
+    mapping(address => uint8[8][8]) private boards;
     mapping(address => bool) private currentPlayer;
 
-    enum ShipTypes { Tug, Frigate, Destroyer, Battleship, Carrier }
+    enum ShipTypes { Empty, Tug, Frigate, Destroyer, Battleship, Carrier }
     uint8[8][8] private defaultBoard;
 
     struct ShipInfo {
@@ -30,6 +30,7 @@ contract BattleshipsV1 is Battleships {
         public
     {
         // Initialise the default ships structure
+        defaultShips.push(ShipInfo(0, 0, 0));
         defaultShips.push(ShipInfo(1, 1, 1));
         defaultShips.push(ShipInfo(1, 2, 2));
         defaultShips.push(ShipInfo(1, 3, 2));

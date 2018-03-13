@@ -28,7 +28,7 @@ contract('BattleshipsV1 all ships placed', ([player, opponent]) => {
     // ..
   })
 
-  context('trying to play another ship', () => {
+  xcontext('trying to play another ship', () => {
     it("player can't play another ship", () =>
       assertThrows(battleships.placeShip(x, y, ship, direction)))
 
@@ -45,7 +45,7 @@ contract('BattleshipsV1 all ships placed', ([player, opponent]) => {
       assertThrows(battleships.playTurn(1, 1, { from: opponent })))
   })
 
-  context('player plays a turn', () => {
+  xcontext('player plays a turn', () => {
     before(async () => {
       tx = await battleships.playTurn(1, 1)
     })
