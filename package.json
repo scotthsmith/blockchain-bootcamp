@@ -40,7 +40,7 @@
     "lint:js": "eslint test/**/*.js"
   },
   "lint-staged": {
-    "**/*.{js,json}": ["prettier --singlequote --no-semi --write", "git add"]
+    "**/*.{js,json}": ["prettier --single-quote --no-semi --write", "git add"]
   },
   "repository": {
     "type": "git",
