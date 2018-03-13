@@ -30,6 +30,7 @@ contract BattleshipsV1 is Battleships {
         public
     {
         // Initialise the default ships structure
+        defaultShips.push(ShipInfo(0, 0, 0));
         defaultShips.push(ShipInfo(1, 1, 1));
         defaultShips.push(ShipInfo(1, 2, 2));
         defaultShips.push(ShipInfo(1, 3, 2));
@@ -258,6 +259,7 @@ contract BattleshipsV1 is Battleships {
     function clearBoard(address player)
         internal
     {
+        boards[player].length = 0;
         uint8[] memory line = new uint8[](8);
         for (uint8 x = 0; x < 8; x++) {
             boards[player].push(line);

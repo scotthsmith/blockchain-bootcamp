@@ -17,10 +17,10 @@ contract('BattleshipsV1 placeShip', ([player, opponent, nonplayer]) => {
   before(async () => {
     battleships = await BattleshipsV1.new()
     await battleships.startGame(opponent)
-    // tx = await battleships.placeShip(x, y, ship, direction)
+    tx = await battleships.placeShip(x, y, ship, direction)
   })
 
-  xit('ShipPlaced event was emitted', () => {
+  it('ShipPlaced event was emitted', () => {
     expect(getLog(tx, 'ShipPlaced')).to.be.ok
   })
 
@@ -32,25 +32,29 @@ contract('BattleshipsV1 placeShip', ([player, opponent, nonplayer]) => {
     expect(battleships.isGameOver()).to.be.false
   })
 
-  xdescribe('cells are as expected', () => {
-    it('getCell(3, 2) returns 0', () => {
-      expect(battleships.getCell(x, y)).to.equal(0)
+  describe('cells are as expected', () => {
+    it('getCell(3, 2) returns 0', async () => {
+      expect((await battleships.getCell(3, 2)).toNumber()).to.equal(0)
     })
 
-    it('getCell(3, 3) returns 3', () => {
-      expect(battleships.getCell(x, y)).to.equal(ship)
+    it('getCell(4, 3) returns 0', async () => {
+      expect((await battleships.getCell(4, 3)).toNumber()).to.equal(0)
     })
 
-    it('getCell(3, 4) returns 3', () => {
-      expect(battleships.getCell(x, y)).to.equal(ship)
+    it('getCell(3, 3) returns 3', async () => {
+      expect((await battleships.getCell(x, y)).toNumber()).to.equal(ship)
     })
 
-    it('getCell(3, 5) returns 3', () => {
-      expect(battleships.getCell(x, y)).to.equal(ship)
+    it('getCell(3, 4) returns 3', async () => {
+      expect((await battleships.getCell(x, y + 1)).toNumber()).to.equal(ship)
     })
 
-    xit('getCell(3, 6) returns 3', () => {
-      expect(battleships.getCell(x, y)).to.equal(ship)
+    it('getCell(3, 5) returns 3', async () => {
+      expect((await battleships.getCell(x, y + 2)).toNumber()).to.equal(ship)
+    })
+
+    it('getCell(3, 6) returns 0', async () => {
+      expect((await battleships.getCell(x, y + 3)).toNumber()).to.equal(0)
     })
   })
 
@@ -71,10 +75,10 @@ contract('BattleshipsV1 placeShip', ([player, opponent, nonplayer]) => {
     xit("Can't place overlapping ship", () =>
       assertThrows(battleships.placeShip(x2, y2, 2, direction2)))
 
-    it("Can't place ship out of bounds", () =>
+    xit("Can't place ship out of bounds", () =>
       assertThrows(battleships.placeShip(8, 8, 4, 0)))
 
-    it("Can't place ship that stretches to out of bounds", () =>
+    xit("Can't place ship that stretches to out of bounds", () =>
       assertThrows(battleships.placeShip(5, 5, 4, 0)))
 
     describe('opponent can place a ship', () => {
@@ -82,7 +86,7 @@ contract('BattleshipsV1 placeShip', ([player, opponent, nonplayer]) => {
         // tx = await battleships.placeShip(x2, y2, ship2, direction2, { from: opponent })
       })
 
-      xit('ShipPlaced event was emitted', () => {
+      it('ShipPlaced event was emitted', () => {
         expect(getLog(tx, 'ShipPlaced')).to.be.ok
       })
 
@@ -95,7 +99,7 @@ contract('BattleshipsV1 placeShip', ([player, opponent, nonplayer]) => {
   })
 
   describe('nonplayer', () => {
-    it("can't place a ship", () =>
+    xit("can't place a ship", () =>
       assertThrows(battleships.placeShip(1, 1, 1, 1, { from: nonplayer })))
 
     xit("can't play a turn", () =>

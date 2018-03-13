@@ -80,7 +80,7 @@ contract('BattleshipsV1 all ships placed', ([player, opponent]) => {
       assertThrows(battleships.playTurn(1, 1, { from: opponent })))
   })
 
-  context('player plays a turn', () => {
+  xcontext('player plays a turn', () => {
     before(async () => {
       tx = await battleships.playTurn(1, 1)
     })
