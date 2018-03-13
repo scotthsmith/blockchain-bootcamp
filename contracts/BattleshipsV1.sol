@@ -10,7 +10,7 @@ contract BattleshipsV1 is Battleships {
     mapping(address => bool) private currentPlayer;
     mapping(address => uint8) private gameState;
 
-    enum ShipTypes { Tug, Frigate, Destroyer, Battleship, Carrier }
+    enum ShipTypes { Empty, Tug, Frigate, Destroyer, Battleship, Carrier }
     uint8[8][8] private defaultBoard;
 
     struct ShipInfo {
@@ -31,6 +31,7 @@ contract BattleshipsV1 is Battleships {
         public
     {
         // Initialise the default ships structure
+        defaultShips.push(ShipInfo(0, 0, 0));
         defaultShips.push(ShipInfo(1, 1, 1));
         defaultShips.push(ShipInfo(1, 2, 2));
         defaultShips.push(ShipInfo(1, 3, 2));
@@ -52,14 +53,8 @@ contract BattleshipsV1 is Battleships {
         opponents[player] = opponent;
         opponents[opponent] = player;
 
-        /*
-
-            TODO: fix this.
-            ref https://ethereum.stackexchange.com/a/11888/3338
-
-        boards[player] = defaultBoard;
-        boards[opponent] = defaultBoard;
-        */
+        clearBoard(player);
+        clearBoard(opponent);
 
         currentPlayer[player] = true;
         currentPlayer[opponent] = true;
@@ -314,4 +309,15 @@ contract BattleshipsV1 is Battleships {
         GameEnded(player, opponents[player], winner);
     }
 
+     * Clear the player's board
+     */
+    function clearBoard(address player)
+        internal
+    {
+        boards[player].length = 0;
+        uint8[] memory line = new uint8[](8);
+        for (uint8 x = 0; x < 8; x++) {
+            boards[player].push(line);
+        }
+    }
 }
