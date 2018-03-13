@@ -38,7 +38,7 @@ interface Battleships {
     event GameEnded(
         address indexed player,
         address indexed opponent,
-        uint8 result
+        address result
     );
 
     /**

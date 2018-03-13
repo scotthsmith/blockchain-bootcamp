@@ -30,7 +30,7 @@ contract('BattleshipsV1 Creation', ([player, opponent]) => {
     expect(await battleships.whoseTurn()).to.equal(Zero.address)
   })
 
-  xit('isGameOver returns false', async () => {
+  it('isGameOver returns false', async () => {
     expect(await battleships.isGameOver()).to.be.false
   })
 
