@@ -3,6 +3,11 @@ pragma solidity ^0.4.19;
 
 interface Battleships {
 
+    //address 32byte address
+    //uint = positive integer. js cant support large numbers, so we use the library bignumber
+    //default is unit32
+
+
     event ShipPlaced(
         address indexed by,
         uint8 x,
@@ -41,6 +46,8 @@ interface Battleships {
      * @param opponent The address you are playing against.
      */
     function startGame(address opponent) external;
+    //extract etherium address from metamask
+    //webpage presents a form of who to play against. address is passed in as opponent
 
     /**
      * At the start of the game each player must place their ships, one at a time.

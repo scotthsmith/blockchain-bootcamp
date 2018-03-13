@@ -10,9 +10,8 @@ contract BattleshipsV1 is Battleships {
     mapping(address => bool) private currentPlayer;
 
     enum ShipTypes { Tug, Frigate, Destroyer, Battleship, Carrier }
-
     uint8[8][8] private defaultBoard;
-
+    
     struct ShipInfo {
         uint8 width;
         uint8 depth;
@@ -74,6 +73,45 @@ contract BattleshipsV1 is Battleships {
         }
 
         ShipPlaced(player, x, y, ship);
+
+    }
+
+    function playTurn(uint8 x, uint8 y)
+        external
+    {
+        address player = msg.sender;
+        address opponent = opponents[player];
+        uint8 result = 0; // TODO: Calculate this
+        uint8 hitsPercentage = 0; // TODO: Calculate this
+        uint8 shipId = 10; // TODO: Get it from somewhere?
+
+        if (result != 0 && hitsPercentage > 50) {
+            // TODO: remove from board
+            ShipSunk(player, opponent, shipId);
+        }
+        TurnPlayed(player, opponent, x, y, result);
+    }
+
+    modifier notAlreadyPlaying(address player) {
+        require(opponents[player] == address(0));
+        _;
+
+    }
+
+    function startGame(address opponent)
+        external
+        notAlreadyPlaying(msg.sender)
+        notAlreadyPlaying(opponent)
+    {
+        address player = msg.sender;
+        opponents[player] = opponent;
+        opponents[opponent] = player;
+
+        boards[player] = defaultBoard;
+        boards[opponent] = defaultBoard;
+
+        GameStarted(player, opponent);
+
     }
 
     /**
