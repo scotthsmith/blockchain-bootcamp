@@ -17,22 +17,32 @@ contract('BattleshipsV1 all ships placed', ([player, opponent]) => {
   before(async () => {
     battleships = await BattleshipsV1.new()
     await battleships.startGame(opponent)
-    // tx = await battleships.placeShip(x, y, ship, direction)
-    // tx = await battleships.placeShip(x, y, ship, direction)
-    // tx = await battleships.placeShip(x, y, ship, direction)
-    // ..
+    /*
+    tx = await battleships.placeShip(0, 0, 1, 1)
+    tx = await battleships.placeShip(0, 1, 2, 1)
+    tx = await battleships.placeShip(0, 2, 3, 1)
+    tx = await battleships.placeShip(0, 3, 4, 1)
+    tx = await battleships.placeShip(0, 4, 5, 1)
+    tx = await battleships.placeShip(5, 0, 2, 0)
+    tx = await battleships.placeShip(6, 0, 3, 0)
+    tx = await battleships.placeShip(7, 0, 4, 0)
 
-    // tx = await battleships.placeShip(x, y, ship, direction, { from: opponent })
-    // tx = await battleships.placeShip(x, y, ship, direction, { from: opponent })
-    // tx = await battleships.placeShip(x, y, ship, direction, { from: opponent })
-    // ..
+    tx = await battleships.placeShip(0, 2, 1, 1, { from: opponent })
+    tx = await battleships.placeShip(0, 3, 2, 1, { from: opponent })
+    tx = await battleships.placeShip(0, 4, 3, 1, { from: opponent })
+    tx = await battleships.placeShip(0, 5, 4, 1, { from: opponent })
+    tx = await battleships.placeShip(0, 6, 5, 1, { from: opponent })
+    tx = await battleships.placeShip(5, 0, 4, 0, { from: opponent })
+    tx = await battleships.placeShip(6, 0, 3, 0, { from: opponent })
+    tx = await battleships.placeShip(7, 0, 2, 0, { from: opponent })
+    */
   })
 
-  context('trying to play another ship', () => {
-    it("player can't play another ship", () =>
+  context('trying to place another ship', () => {
+    it("player can't place another ship", () =>
       assertThrows(battleships.placeShip(x, y, ship, direction)))
 
-    it("opponent can't play another ship", () =>
+    it("opponent can't place another ship", () =>
       assertThrows(
         battleships.placeShip(x, y, ship, direction, { from: opponent })
       ))

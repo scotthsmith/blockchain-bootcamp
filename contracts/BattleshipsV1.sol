@@ -9,7 +9,7 @@ contract BattleshipsV1 is Battleships {
     mapping(address => uint8[][]) private boards;
     mapping(address => bool) private currentPlayer;
 
-    enum ShipTypes { Tug, Frigate, Destroyer, Battleship, Carrier }
+    enum ShipTypes { Empty, Tug, Frigate, Destroyer, Battleship, Carrier }
     uint8[8][8] private defaultBoard;
 
     struct ShipInfo {
