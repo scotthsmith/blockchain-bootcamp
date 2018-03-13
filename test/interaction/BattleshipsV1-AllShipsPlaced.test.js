@@ -13,7 +13,32 @@ contract('BattleshipsV1 all ships placed', ([player, opponent]) => {
   const y = 3
   const ship = 3
   const direction = 0
+  /*
 
+  Player 1
+
+  T____FDB
+  FF___FDB
+  DDD___DB
+  BBBB___B
+  CCCCC___
+  CCCCC___
+  ________
+  ________
+
+
+  Player 2
+
+  _____BDF
+  _____BDF
+  T____BD_
+  FF___B__
+  DDD_____
+  BBBB____
+  CCCCC___
+  CCCCC___
+
+  */
   before(async () => {
     battleships = await BattleshipsV1.new()
     await battleships.startGame(opponent)
