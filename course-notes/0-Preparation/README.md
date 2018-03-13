@@ -25,7 +25,7 @@ Make sure your MacBook has the following installed.
 * [Node version 9.8.0](https://nodejs.org)
 
         nvm install 9.8.0
-        nvm default node
+        nvm alias default node
 
 * [Docker for Mac](https://docs.docker.com/docker-for-mac/)
 * [truffle](http://truffleframework.com/)
