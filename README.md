@@ -1,5 +1,7 @@
 # blockchain-bootcamp
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/industrieco/blockchain-bootcamp.svg)](https://greenkeeper.io/)
+
 Preparation and examples for the Blockchain Bootcamp
 
 * `develop` [![CircleCI](https://circleci.com/gh/industrieco/blockchain-bootcamp/tree/develop.svg?style=svg)](https://circleci.com/gh/industrieco/blockchain-bootcamp/tree/develop) [codecov badge]
