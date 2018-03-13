@@ -51,14 +51,8 @@ contract BattleshipsV1 is Battleships {
         opponents[player] = opponent;
         opponents[opponent] = player;
 
-        /*
-
-            TODO: fix this.
-            ref https://ethereum.stackexchange.com/a/11888/3338
-
-        boards[player] = defaultBoard;
-        boards[opponent] = defaultBoard;
-        */
+        clearBoard(player);
+        clearBoard(opponent);
 
         currentPlayer[player] = true;
         currentPlayer[opponent] = true;
@@ -258,4 +252,15 @@ contract BattleshipsV1 is Battleships {
         return true;
     }
 
+    /**
+     * Clear the player's board
+     */
+    function clearBoard(address player)
+        internal
+    {
+        uint8[] memory line = new uint8[](8);
+        for (uint8 x = 0; x < 8; x++) {
+            boards[player].push(line);
+        }
+    }
 }
