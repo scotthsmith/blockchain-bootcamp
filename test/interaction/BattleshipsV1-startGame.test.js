@@ -1,10 +1,10 @@
-const { expect } = require("chai")
-const BattleshipsV1 = artifacts.require("./BattleshipsV1.sol")
+const { expect } = require('chai')
+const BattleshipsV1 = artifacts.require('./BattleshipsV1.sol')
 
-const Zero = require("../utils/zero")
+const Zero = require('../utils/zero')
 // const checkShipsNotPlaced = require('../utils/checkShipsNotPlaced')
 
-contract("BattleshipsV1 Start Game", ([player, opponent, nonplayer]) => {
+contract('BattleshipsV1 Start Game', ([player, opponent, nonplayer]) => {
   let battleships
   let tx
 
@@ -21,7 +21,7 @@ contract("BattleshipsV1 Start Game", ([player, opponent, nonplayer]) => {
     expect(await battleships.getOpponent({ from: opponent })).to.equal(player)
   })
 
-  it("nonplayer has no opponent", async () => {
+  it('nonplayer has no opponent', async () => {
     expect(await battleships.getOpponent({ from: nonplayer })).to.equal(
       Zero.address
     )
@@ -31,7 +31,7 @@ contract("BattleshipsV1 Start Game", ([player, opponent, nonplayer]) => {
     expect(await battleships.whoseTurn()).to.equal(player)
   })
 
-  xit("isGameOver returns false", async () => {
+  xit('isGameOver returns false', async () => {
     expect(await battleships.isGameOver()).to.be.false
   })
 

@@ -1,12 +1,12 @@
-const { expect } = require("chai")
-const BattleshipsV1 = artifacts.require("./BattleshipsV1.sol")
+const { expect } = require('chai')
+const BattleshipsV1 = artifacts.require('./BattleshipsV1.sol')
 
-const Zero = require("../utils/zero")
-const { getLog } = require("../utils/txHelpers")
-const assertThrows = require("../utils/assertThrows")
+const Zero = require('../utils/zero')
+const { getLog } = require('../utils/txHelpers')
+const assertThrows = require('../utils/assertThrows')
 // const checkShipsNotPlaced = require('../utils/checkShipsNotPlaced')
 
-contract("BattleshipsV1 all ships placed", ([player, opponent]) => {
+contract('BattleshipsV1 all ships placed', ([player, opponent]) => {
   let battleships
   let tx
   const x = 3
@@ -28,7 +28,7 @@ contract("BattleshipsV1 all ships placed", ([player, opponent]) => {
     // ..
   })
 
-  context("trying to play another ship", () => {
+  context('trying to play another ship', () => {
     it("player can't play another ship", () =>
       assertThrows(battleships.placeShip(x, y, ship, direction)))
 
@@ -40,18 +40,18 @@ contract("BattleshipsV1 all ships placed", ([player, opponent]) => {
 
   // ;[1, 2, 3, 4, 5].forEach(checkShipsAllPlaced)
 
-  xcontext("opponent tries to play a shot out of turn", () => {
-    it("throws an error", () =>
+  xcontext('opponent tries to play a shot out of turn', () => {
+    it('throws an error', () =>
       assertThrows(battleships.playTurn(1, 1, { from: opponent })))
   })
 
-  context("player plays a turn", () => {
+  context('player plays a turn', () => {
     before(async () => {
       tx = await battleships.playTurn(1, 1)
     })
 
-    it("emitted the TurnPlayed event", () => {
-      expect(getLog(tx, "TurnPlayed")).to.exist
+    it('emitted the TurnPlayed event', () => {
+      expect(getLog(tx, 'TurnPlayed')).to.exist
     })
 
     it("now it is the opponent's turn", async () => {

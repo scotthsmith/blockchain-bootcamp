@@ -48,7 +48,7 @@
   },
   "keywords": ["identity"],
   "author": "Dave Sag <david.sag@industrie.co>",
-  "contributors": [],
+  "contributors": ["Jack Reichelt <jack.reichelt@industrie.co>"],
   "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/industrieco/blockchain-bootstrap/issues"

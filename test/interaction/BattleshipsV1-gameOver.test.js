@@ -1,12 +1,12 @@
-const { expect } = require("chai")
-const BattleshipsV1 = artifacts.require("./BattleshipsV1.sol")
+const { expect } = require('chai')
+const BattleshipsV1 = artifacts.require('./BattleshipsV1.sol')
 
-const Zero = require("../utils/zero")
-const { getLog } = require("../utils/txHelpers")
-const assertThrows = require("../utils/assertThrows")
+const Zero = require('../utils/zero')
+const { getLog } = require('../utils/txHelpers')
+const assertThrows = require('../utils/assertThrows')
 // const checkShipsNotPlaced = require('../utils/checkShipsNotPlaced')
 
-contract("BattleshipsV1 game over", ([player, opponent]) => {
+contract('BattleshipsV1 game over', ([player, opponent]) => {
   let battleships
   let tx
   const x = 3
@@ -34,27 +34,27 @@ contract("BattleshipsV1 game over", ([player, opponent]) => {
     // ..
   })
 
-  xit("emitted the GameOver event", () => {
-    expect(getLog(tx, "GameOver")).to.exist
+  xit('emitted the GameOver event', () => {
+    expect(getLog(tx, 'GameOver')).to.exist
   })
 
-  xit("isGameOver is true for player", async () => {
+  xit('isGameOver is true for player', async () => {
     expect(await battleships.isGameOver()).to.be.true
   })
 
-  xit("isGameOver is true for opponent", async () => {
+  xit('isGameOver is true for opponent', async () => {
     expect(await battleships.isGameOver({ from: opponent })).to.be.true
   })
 
-  xit("whoseTurn returns 0x0", async () => {
+  xit('whoseTurn returns 0x0', async () => {
     expect(await battleships.whoseTurn()).to.equal(Zero.address)
   })
 
-  xit("player has no opponent", async () => {
+  xit('player has no opponent', async () => {
     expect(await battleships.getOpponent()).to.equal(Zero.address)
   })
 
-  xit("opponent has no opponent", async () => {
+  xit('opponent has no opponent', async () => {
     expect(await battleships.getOpponent({ from: opponent })).to.equal(
       Zero.address
     )

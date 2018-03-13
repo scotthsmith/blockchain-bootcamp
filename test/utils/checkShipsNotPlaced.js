@@ -1,4 +1,4 @@
-const { expect } = require("chai")
+const { expect } = require('chai')
 
 const checkShipsNotPlaced = battleships => ship => {
   it(`has not placed all ships of type ${ship}`, async () => {
