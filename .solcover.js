@@ -1,1 +1,3 @@
-module.exports = {}
+module.exports = {
+  skipFiles: ['Battleships.sol']
+}

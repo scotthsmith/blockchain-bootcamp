@@ -8,7 +8,7 @@
 - Truffle
 - MetaMask
 - Ganache
-- Atom
+- Atom (or whatever)
 
     - Solidity language pack
     - other handy packages
@@ -37,7 +37,7 @@
 - modifiers
 - `pure` vs `view` vs something that touches the blockchain
 - `msg.sender`
-- `gas`
+- `msg.gas`
 - the `constructor`
 - the `default` function
 - casting

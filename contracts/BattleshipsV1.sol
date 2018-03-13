@@ -20,15 +20,51 @@ contract BattleshipsV1 is Battleships {
 
     ShipInfo[] private defaultShips;
 
+    modifier notAlreadyPlaying(address player) {
+        require(opponents[player] == address(0));
+        _;
+
+    }
+
     function BattleshipsV1()
         public
     {
         // Initialise the default ships structure
-        defaultShips[uint8(ShipTypes.Tug)] = ShipInfo(1, 1, 1);
-        defaultShips[uint8(ShipTypes.Frigate)] = ShipInfo(1, 2, 2);
-        defaultShips[uint8(ShipTypes.Destroyer)] = ShipInfo(1, 3, 2);
-        defaultShips[uint8(ShipTypes.Battleship)] = ShipInfo(1, 4, 2);
-        defaultShips[uint8(ShipTypes.Carrier)] = ShipInfo(2, 5, 1);
+        defaultShips.push(ShipInfo(1, 1, 1));
+        defaultShips.push(ShipInfo(1, 2, 2));
+        defaultShips.push(ShipInfo(1, 3, 2));
+        defaultShips.push(ShipInfo(1, 4, 2));
+        defaultShips.push(ShipInfo(2, 5, 1));
+    }
+
+    /**
+     * Starts a new game between `msg.sender` and the nominated opponent.
+     * MUST emit the `GameStarted` event.
+     * @param opponent The address you are playing against.
+     */
+    function startGame(address opponent)
+        external
+        notAlreadyPlaying(msg.sender)
+        notAlreadyPlaying(opponent)
+    {
+        address player = msg.sender;
+        opponents[player] = opponent;
+        opponents[opponent] = player;
+
+        /*
+
+            TODO: fix this.
+            ref https://ethereum.stackexchange.com/a/11888/3338
+
+        boards[player] = defaultBoard;
+        boards[opponent] = defaultBoard;
+        */
+
+        currentPlayer[player] = true;
+        currentPlayer[opponent] = true;
+
+        GameStarted(player, opponent);
+
     }
 
     /**
@@ -44,7 +80,7 @@ contract BattleshipsV1 is Battleships {
      * 5 | Carrier    | 2 x 5 | 1
      *
      * The ships get placfunction placeShip(uint8 x, uint8 y, uint8 ship, uint8 direction)
-     * ternal;ed one at a time until there are no more ships.
+     * placed one at a time until there are no more ships.
      * The ships get placfunction placeShip(uint8 x, uint8 y, uint8 ship, uint8 direction)
      * externalised one at a time until there are no more ships.
      * The function MUST throw if the placed ship overlaps with another.
@@ -59,32 +95,39 @@ contract BattleshipsV1 is Battleships {
     {
         address player = msg.sender;
 
-        uint8[][] memory board = boards[player];
-
         ShipInfo memory thisShip = defaultShips[ship];
 
         if (direction == 0) {
-            for (uint8 idxX = x; idxX < x+thisShip.width; idxX++) {
-                board[idxX][y] = ship;
+            for (uint8 idxX = x; idxX < (x + thisShip.width); idxX++) {
+                boards[player][idxX][y] = ship;
             }
 
-            for (uint8 idxY = y; idxY < y+thisShip.depth; idxY++) {
-                board[x][idxY] = ship;
+            for (uint8 idxY = y; idxY < (y + thisShip.depth); idxY++) {
+                boards[player][x][idxY] = ship;
             }
         } else {
-            for (idxX = x; idxX < x+thisShip.depth; idxX++) {
-                board[idxX][y] = ship;
+            for (idxX = x; idxX < (x + thisShip.depth); idxX++) {
+                boards[player][idxX][y] = ship;
             }
 
-            for (idxY = y; idxY < y+thisShip.width; idxY++) {
-                board[x][idxY] = ship;
+            for (idxY = y; idxY < (y + thisShip.width); idxY++) {
+                boards[player][x][idxY] = ship;
             }
         }
 
         ShipPlaced(player, x, y, ship, direction);
-
     }
 
+    /**
+     * A shot is fired.
+     * MUST emit `TurnPlayed` event with the result of the shot.
+     * Results are either `0` for a miss, or the int8 representing the ship type that was hit.
+     * If a hits on a ship account for more than 50% of its size then it is sunk.
+     * A negative number denotes that part of the ship was hit.
+     * If a ship is sunk then the ship is removed from the board emit a `ShipSunk` event.
+     * @param x The horizontal grid location of the shot.
+     * @param y The vertical grid location of the shot.
+     */
     function playTurn(uint8 x, uint8 y)
         external
     {
@@ -98,29 +141,11 @@ contract BattleshipsV1 is Battleships {
             // TODO: remove from board
             ShipSunk(player, opponent, shipId);
         }
+
+        currentPlayer[player] = false;
+        currentPlayer[opponent] = true;
+
         TurnPlayed(player, opponent, x, y, result);
-    }
-
-    modifier notAlreadyPlaying(address player) {
-        require(opponents[player] == address(0));
-        _;
-
-    }
-
-    function startGame(address opponent)
-        external
-        notAlreadyPlaying(msg.sender)
-        notAlreadyPlaying(opponent)
-    {
-        address player = msg.sender;
-        opponents[player] = opponent;
-        opponents[opponent] = player;
-
-        boards[player] = defaultBoard;
-        boards[opponent] = defaultBoard;
-
-        GameStarted(player, opponent);
-
     }
 
     /**
