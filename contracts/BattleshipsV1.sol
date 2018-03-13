@@ -19,6 +19,22 @@ contract BattleshipsV1 is Battleships {
 
     }
 
+    function playTurn(uint8 x, uint8 y)
+        external
+    {
+        address player = msg.sender;
+        address opponent = opponents[player];
+        uint8 result = 0; // TODO: Calculate this
+        uint8 hitsPercentage = 0; // TODO: Calculate this
+        uint8 shipId = 10; // TODO: Get it from somewhere?
+
+        if (result != 0 && hitsPercentage > 50) {
+            // TODO: remove from board
+            ShipSunk(player, opponent, shipId);
+        }
+        TurnPlayed(player, opponent, x, y, result);
+    }
+
     modifier notAlreadyPlaying(address player) {
         require(opponents[player] == address(0));
         _;
