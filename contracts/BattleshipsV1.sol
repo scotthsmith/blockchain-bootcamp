@@ -24,7 +24,11 @@ contract BattleshipsV1 is Battleships {
     modifier notAlreadyPlaying(address player) {
         require(opponents[player] == address(0));
         _;
+    }
 
+    modifier yourTurn() {
+        require(currentPlayer[msg.sender] == true);
+        _;
     }
 
     function BattleshipsV1()
@@ -97,20 +101,20 @@ contract BattleshipsV1 is Battleships {
 
         if (direction == 0) {
             for (uint8 idxX = x; idxX < (x + thisShip.width); idxX++) {
-                boards[player][idxX][y] = ship;
+                for (uint8 idxY = y; idxY < (y + thisShip.depth); idxY++) {
+                    assert(boards[player][idxX][idxY] == uint8(ShipTypes.Empty));
+                    boards[player][idxX][idxY] = ship;
+                }
             }
 
-            for (uint8 idxY = y; idxY < (y + thisShip.depth); idxY++) {
-                boards[player][x][idxY] = ship;
-            }
         } else {
             for (idxX = x; idxX < (x + thisShip.depth); idxX++) {
-                boards[player][idxX][y] = ship;
+                for (idxY = y; idxY < (y + thisShip.width); idxY++) {
+                    assert(boards[player][idxX][idxY] == uint8(ShipTypes.Empty));
+                    boards[player][idxX][idxY] = ship;
+                }
             }
 
-            for (idxY = y; idxY < (y + thisShip.width); idxY++) {
-                boards[player][x][idxY] = ship;
-            }
         }
         gameState[player] = 2;
         ShipPlaced(player, x, y, ship, direction);
@@ -128,9 +132,12 @@ contract BattleshipsV1 is Battleships {
      */
     function playTurn(uint8 x, uint8 y)
         external
+        yourTurn()
     {
         address player = msg.sender;
         address opponent = opponents[player];
+        assert(gameState[player] == 2);
+        assert(gameState[opponent] == 2);
         uint8 result = 0; // TODO: Calculate this
         uint8 hitsPercentage = 0; // TODO: Calculate this
         uint8 shipId = 10; // TODO: Get it from somewhere?
