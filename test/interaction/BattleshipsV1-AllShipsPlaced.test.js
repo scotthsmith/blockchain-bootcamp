@@ -42,7 +42,7 @@ contract('BattleshipsV1 all ships placed', ([player, opponent]) => {
   before(async () => {
     battleships = await BattleshipsV1.new()
     await battleships.startGame(opponent)
-    /*
+
     tx = await battleships.placeShip(0, 0, 1, 1)
     tx = await battleships.placeShip(0, 1, 2, 1)
     tx = await battleships.placeShip(0, 2, 3, 1)
@@ -60,14 +60,13 @@ contract('BattleshipsV1 all ships placed', ([player, opponent]) => {
     tx = await battleships.placeShip(5, 0, 4, 0, { from: opponent })
     tx = await battleships.placeShip(6, 0, 3, 0, { from: opponent })
     tx = await battleships.placeShip(7, 0, 2, 0, { from: opponent })
-    */
   })
 
   context('trying to place another ship', () => {
-    xit("player can't place another ship", () =>
+    it("player can't place another ship", () =>
       assertThrows(battleships.placeShip(x, y, ship, direction)))
 
-    xit("opponent can't place another ship", () =>
+    it("opponent can't place another ship", () =>
       assertThrows(
         battleships.placeShip(x, y, ship, direction, { from: opponent })
       ))
