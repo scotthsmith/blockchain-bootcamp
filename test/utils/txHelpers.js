@@ -15,6 +15,22 @@ const getLog = (tx, event) => {
 }
 
 /**
+ *  extract all logs for a specific event from the supplied transaction
+ *  @param tx — The transaction to look into
+ *  @param event — The name of the event to look for
+ *  @throws if no event matches
+ *  @return the logs for the matching event.
+ */
+const getAllLogs = (tx, event) => {
+  const theLogs = tx.logs.filter(log => log.event === event)
+  if (theLogs.length === 0)
+    throw new Error(
+      `No logs with event ${event}. Logs ${JSON.stringify(tx.logs)}`
+    )
+  return theLogs
+}
+
+/**
  *  Get the address of a specific variable given an event and a transaction.
  *  @param tx — The transaction to look into
  *  @param event — The name of the event to look for
@@ -48,6 +64,7 @@ const getContract = (tx, event, variable, Contract) =>
 
 module.exports = {
   getLog,
+  getAllLogs,
   getAddress,
   getContract
 }

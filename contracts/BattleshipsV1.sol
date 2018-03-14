@@ -25,7 +25,11 @@ contract BattleshipsV1 is Battleships {
     modifier notAlreadyPlaying(address player) {
         require(opponents[player] == address(0));
         _;
+    }
 
+    modifier yourTurn() {
+        require(currentPlayer[msg.sender] == true);
+        _;
     }
 
     function BattleshipsV1()
@@ -102,24 +106,26 @@ contract BattleshipsV1 is Battleships {
 
         if (direction == 0) {
             for (uint8 idxX = x; idxX < (x + thisShip.width); idxX++) {
-                boards[player][idxX][y] = ship;
+                for (uint8 idxY = y; idxY < (y + thisShip.depth); idxY++) {
+                    assert(boards[player][idxX][idxY] == uint8(ShipTypes.Empty));
+                    boards[player][idxX][idxY] = ship;
+                }
             }
 
-            for (uint8 idxY = y; idxY < (y + thisShip.depth); idxY++) {
-                boards[player][x][idxY] = ship;
-            }
         } else {
             for (idxX = x; idxX < (x + thisShip.depth); idxX++) {
-                boards[player][idxX][y] = ship;
+                for (idxY = y; idxY < (y + thisShip.width); idxY++) {
+                    assert(boards[player][idxX][idxY] == uint8(ShipTypes.Empty));
+                    boards[player][idxX][idxY] = ship;
+                }
             }
 
-            for (idxY = y; idxY < (y + thisShip.width); idxY++) {
-                boards[player][x][idxY] = ship;
-            }
         }
 
         // Reduce the numbers of that ship
         thisShipsPlaced[ship] = thisShipsPlaced[ship] + 1;
+
+        gameState[player] = 2;
 
         ShipPlaced(player, x, y, ship, direction);
     }
@@ -136,9 +142,12 @@ contract BattleshipsV1 is Battleships {
      */
     function playTurn(uint8 x, uint8 y)
         external
+        yourTurn()
     {
         address player = msg.sender;
         address opponent = opponents[player];
+        assert(gameState[player] == 2);
+        assert(gameState[opponent] == 2);
         uint8 result = 0; // TODO: Calculate this
         uint8 hitsPercentage = 0; // TODO: Calculate this
         uint8 shipId = 10; // TODO: Get it from somewhere?
@@ -212,12 +221,8 @@ contract BattleshipsV1 is Battleships {
                 }
             }
         }
-        if (cellCounts[shipType] == expectedCounts[shipType]) {
-            gameState[msg.sender] = 2;
-            gameState[opponents[msg.sender]] = 2;
-            return true;
-        }
-        return false;
+
+        return cellCounts[shipType] == expectedCounts[shipType];
     }
 
     /**
@@ -245,27 +250,27 @@ contract BattleshipsV1 is Battleships {
         view
         returns (bool)
     {
-        //if (isBoardCleared(msg.sender) && isBoardCleared(opponents[msg.sender])) {
-        //if game started && all ships placed && one board is cleared(?) - gameover
+        if (checkGameOver(msg.sender)) {
+            return true;
+        }
+        if (checkGameOver(opponents[msg.sender])) {
+            return true;
+        }
+        return false;
+    }
 
-
-        if (isGameStarted(msg.sender) || isGameStarted(opponents[msg.sender])) {
-            //Game has started
-            if (isBoardCleared(msg.sender) && isBoardCleared(opponents[msg.sender])) {
-                //Game has started but boards are empty
-                return false;
-            } else if (isBoardCleared(msg.sender) && gameState[msg.sender] == 2) {
-                endGame(msg.sender, opponents[msg.sender]);
-                return true;
-            } else if (isBoardCleared(opponents[msg.sender]) && gameState[opponents[msg.sender]] == 2) {
-                endGame(msg.sender, msg.sender);
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            //Game has not been started
-            return false;
+    /**
+     * Checks if a player has lost the game
+     * @return true if the player has lost
+     */
+    function checkGameOver(address player)
+        internal
+        view
+        returns(bool)
+    {
+        if (gameState[player] == 2 && isBoardCleared(player)) {
+            GameEnded(player, opponents[player], opponents[player]);
+            return true;
         }
     }
 
@@ -281,40 +286,12 @@ contract BattleshipsV1 is Battleships {
         for (uint8 x = 0; x < 8; x++) {
             for (uint8 y = 0; y < 8; y++) {
                 uint8 cellType = boards[player][x][y];
-                if (cellType > 0) {
+                if (cellType != 0) {
                     return false;
                 }
             }
         }
         return true;
-    }
-
-    /**
-     * Check if game has been started
-     * @return false if the game has not been started, true otherwise
-     */
-    function isGameStarted(address player)
-        internal
-        view
-        returns(bool)
-    {
-        if (gameState[player] == 0) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * Set gameState to ended
-     */
-    function endGame(address player, address winner)
-        internal
-    {
-        gameState[player] = 0;
-        gameState[opponents[player]] = 0;
-        opponents[player] = address(0);
-        GameEnded(player, opponents[player], winner);
     }
 
     /*
