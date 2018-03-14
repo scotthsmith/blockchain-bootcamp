@@ -8,6 +8,7 @@ contract BattleshipsV1 is Battleships {
     mapping(address => address) private opponents;
     mapping(address => uint8[][]) private boards;
     mapping(address => bool) private currentPlayer;
+    mapping(address => uint8[]) private shipsPlaced;
     mapping(address => uint8) private gameState;
 
     enum ShipTypes { Empty, Tug, Frigate, Destroyer, Battleship, Carrier }
@@ -94,6 +95,10 @@ contract BattleshipsV1 is Battleships {
         address player = msg.sender;
 
         ShipInfo memory thisShip = defaultShips[ship];
+        uint8[] storage thisShipsPlaced = shipsPlaced[player];
+
+        // Make sure that there is still a count of these ships to place
+        require(thisShipsPlaced[ship] < thisShip.count);
 
         if (direction == 0) {
             for (uint8 idxX = x; idxX < (x + thisShip.width); idxX++) {
@@ -112,6 +117,9 @@ contract BattleshipsV1 is Battleships {
                 boards[player][x][idxY] = ship;
             }
         }
+
+        // Reduce the numbers of that ship
+        thisShipsPlaced[ship] = thisShipsPlaced[ship] + 1;
 
         ShipPlaced(player, x, y, ship, direction);
     }
@@ -320,5 +328,7 @@ contract BattleshipsV1 is Battleships {
         for (uint8 x = 0; x < 8; x++) {
             boards[player].push(line);
         }
+        // Reset the shipPlaced to zero
+        shipsPlaced[player] = new uint8[](6);
     }
 }
