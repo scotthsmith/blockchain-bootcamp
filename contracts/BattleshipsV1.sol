@@ -27,8 +27,8 @@ contract BattleshipsV1 is Battleships {
     }
 
     modifier yourTurn() {
-      require(currentPlayer[msg.sender] == true);
-      _;
+        require(currentPlayer[msg.sender] == true);
+        _;
     }
 
     function BattleshipsV1()
