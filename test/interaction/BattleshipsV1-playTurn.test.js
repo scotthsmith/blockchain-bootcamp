@@ -13,6 +13,8 @@ contract('BattleshipsV1 Play Turn', ([player, opponent]) => {
   before(async () => {
     battleships = await BattleshipsV1.new()
     tx = await battleships.startGame(opponent)
+    tx = await battleships.placeShip(0, 0, 0, 0)
+    tx = await battleships.placeShip(0, 0, 0, 0, { from: opponent })
   })
 
   it('opponent cannot playTurn', async () => {
