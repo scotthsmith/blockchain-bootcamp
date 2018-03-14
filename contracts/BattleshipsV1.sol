@@ -8,6 +8,7 @@ contract BattleshipsV1 is Battleships {
     mapping(address => address) private opponents;
     mapping(address => uint8[][]) private boards;
     mapping(address => bool) private currentPlayer;
+    mapping(address => uint8) private gameState;
 
     enum ShipTypes { Empty, Tug, Frigate, Destroyer, Battleship, Carrier }
     uint8[8][8] private defaultBoard;
@@ -57,6 +58,8 @@ contract BattleshipsV1 is Battleships {
 
         currentPlayer[player] = true;
         currentPlayer[opponent] = true;
+        gameState[player] = 1;
+        gameState[opponent] = 1;
 
         GameStarted(player, opponent);
 
@@ -201,8 +204,12 @@ contract BattleshipsV1 is Battleships {
                 }
             }
         }
-
-        return cellCounts[shipType] == expectedCounts[shipType];
+        if (cellCounts[shipType] == expectedCounts[shipType]) {
+            gameState[msg.sender] = 2;
+            gameState[opponents[msg.sender]] = 2;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -230,7 +237,28 @@ contract BattleshipsV1 is Battleships {
         view
         returns (bool)
     {
-        return isBoardCleared(msg.sender) || isBoardCleared(opponents[msg.sender]);
+        //if (isBoardCleared(msg.sender) && isBoardCleared(opponents[msg.sender])) {
+        //if game started && all ships placed && one board is cleared(?) - gameover
+
+
+        if (isGameStarted(msg.sender) || isGameStarted(opponents[msg.sender])) {
+            //Game has started
+            if (isBoardCleared(msg.sender) && isBoardCleared(opponents[msg.sender])) {
+                //Game has started but boards are empty
+                return false;
+            } else if (isBoardCleared(msg.sender) && gameState[msg.sender] == 2) {
+                endGame(msg.sender, opponents[msg.sender]);
+                return true;
+            } else if (isBoardCleared(opponents[msg.sender]) && gameState[opponents[msg.sender]] == 2) {
+                endGame(msg.sender, msg.sender);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            //Game has not been started
+            return false;
+        }
     }
 
     /**
@@ -242,8 +270,8 @@ contract BattleshipsV1 is Battleships {
         view
         returns(bool)
     {
-        for (uint8 x = 0; x < 8; ++x) {
-            for (uint8 y = 0; y < 8; ++y) {
+        for (uint8 x = 0; x < 8; x++) {
+            for (uint8 y = 0; y < 8; y++) {
                 uint8 cellType = boards[player][x][y];
                 if (cellType > 0) {
                     return false;
@@ -254,6 +282,34 @@ contract BattleshipsV1 is Battleships {
     }
 
     /**
+     * Check if game has been started
+     * @return false if the game has not been started, true otherwise
+     */
+    function isGameStarted(address player)
+        internal
+        view
+        returns(bool)
+    {
+        if (gameState[player] == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Set gameState to ended
+     */
+    function endGame(address player, address winner)
+        internal
+    {
+        gameState[player] = 0;
+        gameState[opponents[player]] = 0;
+        opponents[player] = address(0);
+        GameEnded(player, opponents[player], winner);
+    }
+
+    /*
      * Clear the player's board
      */
     function clearBoard(address player)
