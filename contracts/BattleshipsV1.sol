@@ -24,7 +24,11 @@ contract BattleshipsV1 is Battleships {
     modifier notAlreadyPlaying(address player) {
         require(opponents[player] == address(0));
         _;
+    }
 
+    modifier yourTurn() {
+        require(currentPlayer[msg.sender] == true);
+        _;
     }
 
     function BattleshipsV1()
@@ -128,6 +132,7 @@ contract BattleshipsV1 is Battleships {
      */
     function playTurn(uint8 x, uint8 y)
         external
+        yourTurn()
     {
         address player = msg.sender;
         address opponent = opponents[player];
