@@ -59,9 +59,11 @@ contract('BattleshipsV1 placeShip', ([player, opponent, nonplayer]) => {
   })
 
   describe('placing a second ship', () => {
-    const x2 = 5
-    const y2 = 3
-    const ship2 = 1
+    const x2 = 1
+    const y2 = 1
+    const x3 = 2
+    const y3 = 2
+    const ship2 = 5
     const direction2 = 1
 
     before(async () => {
@@ -73,7 +75,7 @@ contract('BattleshipsV1 placeShip', ([player, opponent, nonplayer]) => {
     })
 
     it("Can't place overlapping ship", () =>
-      assertThrows(battleships.placeShip(x2, y2, 2, direction2)))
+      assertThrows(battleships.placeShip(x3, y3, 1, direction2)))
 
     it("Can't place ship out of bounds", () =>
       assertThrows(battleships.placeShip(8, 8, 4, 0)))
