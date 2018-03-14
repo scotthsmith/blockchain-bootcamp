@@ -309,6 +309,7 @@ contract BattleshipsV1 is Battleships {
         GameEnded(player, opponents[player], winner);
     }
 
+    /*
      * Clear the player's board
      */
     function clearBoard(address player)
