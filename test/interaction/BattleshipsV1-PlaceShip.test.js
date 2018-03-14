@@ -65,35 +65,37 @@ contract('BattleshipsV1 placeShip', ([player, opponent, nonplayer]) => {
     const direction2 = 1
 
     before(async () => {
-      // tx = await battleships.placeShip(x2, y2, ship2, direction2)
+      tx = await battleships.placeShip(x2, y2, ship2, direction2)
     })
 
-    xit('ShipPlaced event was emitted', () => {
+    it('ShipPlaced event was emitted', () => {
       expect(getLog(tx, 'ShipPlaced')).to.be.ok
     })
 
-    xit("Can't place overlapping ship", () =>
+    it("Can't place overlapping ship", () =>
       assertThrows(battleships.placeShip(x2, y2, 2, direction2)))
 
-    xit("Can't place ship out of bounds", () =>
+    it("Can't place ship out of bounds", () =>
       assertThrows(battleships.placeShip(8, 8, 4, 0)))
 
-    xit("Can't place ship that stretches to out of bounds", () =>
+    it("Can't place ship that stretches to out of bounds", () =>
       assertThrows(battleships.placeShip(5, 5, 4, 0)))
 
     describe('opponent can place a ship', () => {
       before(async () => {
-        // tx = await battleships.placeShip(x2, y2, ship2, direction2, { from: opponent })
+        tx = await battleships.placeShip(x2, y2, ship2, direction2, {
+          from: opponent
+        })
       })
 
       it('ShipPlaced event was emitted', () => {
         expect(getLog(tx, 'ShipPlaced')).to.be.ok
       })
 
-      xit("player can't play a turn", () =>
+      it("player can't play a turn", () =>
         assertThrows(battleships.playTurn(5, 5)))
 
-      xit("opponent can't play a turn", () =>
+      it("opponent can't play a turn", () =>
         assertThrows(battleships.playTurn(5, 5, { from: opponent })))
     })
   })
