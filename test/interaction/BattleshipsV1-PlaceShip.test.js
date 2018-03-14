@@ -29,7 +29,7 @@ contract('BattleshipsV1 placeShip', ([player, opponent, nonplayer]) => {
   })
 
   it('isGameOver returns false', async () => {
-      expect(await battleships.isGameOver()).to.be.false
+    expect(await battleships.isGameOver()).to.be.false
   })
 
   describe('cells are as expected', () => {
